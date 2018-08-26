@@ -1,0 +1,60 @@
+<div class="row" >
+  <div class="col-xs-12">
+    <img
+      [src]="item.image_path"
+      alt="{{ item.item_name }}"
+      class="img-responsive"
+      style="max-height: 300px;">
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <h1>{{item.item_name}}</h1>
+    <h4>{{item.item_price}} Rupees per kg</h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div
+      class="btn-group"
+      >
+      <tbody>
+          <table>
+            <thead>
+            <th> 
+                <label class="control-label col-sm-2">Quantity:</label>
+            </th>
+            <th>
+                <div class="col-md-9">
+                    <label>KILOGRAMS</label>
+                    <input class="form-control" required value="0" name="Kilograms" type="number" [(ngModel)]="item.KiloGrams" min="0">
+                     
+                    
+                 </div>
+            </th>
+            <th>
+                <div class="col-md-9">
+                    <label>GRAMS</label>
+                    <input id="Grams"class="form-control" required #Grams="ngModel" value="0" name="Grams"  type="number" [(ngModel)]="item.Grams" minlength="0">
+                     </div>
+                
+            </th>
+            </thead>
+            <td></td>
+          <th>
+                <div class="col-md-9">
+                    <button 
+                    type="button"
+                    class="btn btn-primary"(click)="OnClickCart(item)"> <span class="glyphicon glyphicon-shopping-cart"></span>
+                    Add To Cart
+                  </button>
+                     </div>
+          
+                    </th>
+          </table>
+        </tbody>
+    
+              </div>
+              </div>
+            
+

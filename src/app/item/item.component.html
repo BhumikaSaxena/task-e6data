@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="row">
+  <div class="col-md-5">
+    <app-itemlist *ngIf = "LoadedFeature === 'Home'"></app-itemlist>
+    <app-shopping-cart *ngIf = "LoadedFeature !== 'Home'"></app-shopping-cart>
+  </div>  
+  <div class="col-md-7" >
+    <app-itemdetail *ngIf="SelectedItem; else infoText"
+    [item]="SelectedItem"></app-itemdetail>
+    <ng-template #infoText>
+      <p> <b>Please select a Item!</b></p>
+    </ng-template>
+    </div>  
+  </div>
+
+
+
+
+

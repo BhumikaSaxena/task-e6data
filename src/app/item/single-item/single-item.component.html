@@ -1,0 +1,16 @@
+<a  class="list-group-item clearfix"
+(click)="OnSelect()">
+<span class="float-left">
+    <img
+      alt="orange"
+      [src]="item.image_path"
+      class="img-responsive"
+      style="max-height: 50px;" >
+   </span>
+    <div class="float-right" >
+        <h4 class="list-group-item-heading">
+            {{item.item_name}}
+            
+        </h4>    
+      </div>
+</a>
