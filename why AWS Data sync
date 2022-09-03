@@ -1,0 +1,20 @@
+use-cases 
+data migration
+Data processing for hybrid Cloud
+Data protection
+
+DirectionsNFS → AWS S3
+backNFS  → AWS EFS and back
+
+Features
+Copy file ownership
+Syncing file permissions
+Keep file change 
+timestamps
+Keep deleted files
+File transfer verification Bandwidth 
+throttling
+
+Cost
+0.04 per GB
+

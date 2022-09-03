@@ -1,0 +1,58 @@
+Transferring file data across AWS Regions and accounts using AWS DataSync
+
+configuring AWS DataSync for cross-Region or cross-account transfers using VPC endpoints.
+these steps will help us move data between Amazon EFS file systems using private IP addresses accessible within the VPCs.
+I have used AWS DataSync with Amazon VPC using VPC endpoints. data is transferred between the agent, and the DataSync service endpoints without a public IP address or public internet access. Using AWS DataSync with VPC endpoints ensures that all traffic is under  control within the VPC at all times. (ensuring the security).
+
+Solution:
+AWS DataSync uses an agent to transfer data from one Amazon EFS file system to another. The agent should be deployed on an Amazon EC2 instance in the source file system Region or location. Then, the DataSync agent should be activated in the destination file system Region using VPC endpoints, enabling yo agent to communicate with the DataSync service endpoints using private IPs. In configuring this setup, I have placed the DataSync agent in the VPC of the source file system and activate it using the private VPC endpoint where the target file system resides. VPC peering should be configured to facilitate the transfer of data between VPCs across different AWS Regions.
+
+for each transfer task, four elastic network interfaces (ENIs) automatically get placed in the destination VPC. the source DataSync agent sends traffic through these ENIs in order to transfer data from the source file system to the destination file system.
+
+AWS DataSync uses an agent deployed on an Amazon EC2 instance in the source file system Region to transfer data from one Amazon EFS file system to another.
+
+Setting up the transfer
+
+
+Created a VPC peering connection
+Created a VPC peering connection between the VPC of the source and destination file systems. 
+
+for example details of my network setup for my source and destination locations:
+
+Source EFS: fs-b8457546712               Mount Target IP: 192.x8.0.2x
+Agent IP: 192.18.0.27
+Destination EFS: fs-fc280bdd     Mount Target IP: 10.0.2.2
+Source VPC CIDR: 192.18.0.0/24
+Destination VPC CIDR: 10.0.0.0/16
+
+Set up DataSync agent in source location
+In the source location, I deployed the EC2 DataSync agent in the private subnet. 
+steps for destination:
+I chose e a private subnet from the source VPC, which is used to establish a peer with the destination VPC.
+Ensure that the DataSync agent is able to access the source Amazon EFS location via NFS, and also able to mount a source NFS file system on port 2049 from the DataSync agent IP. the agent does not need a public IP.
+Configure the destination location
+Created a security group in the destination Region or account.the agent can route traffic towards the private IP addresses that DataSync uses. These addresses include one VPC endpoint for control traffic and four ENIs to use for data transfer. The security group manages access to these private IPs. Since the agent must establish connections to these IPs, configure inbound rules allowing the agent’s private IP in the source Region to connect to the IPs DataSync uses. The agent must talk to ports 1024–1064, 443, and port 22.
+
+
+In the destination location, I have created a VPC endpoint for the DataSync service. 
+
+after Creating and activating the DataSync agent
+
+After the instance is deployed activate the agent by generating an activation key.
+
+Then Created agent page for a DataSync agent.
+
+successfully activated DataSync agent with Agent ID and Service endpoint.
+
+Configure location for DataSync task
+to create a DataSync task in the destination AWS Region. I created a source and destination location. To configure the source location, I choose the location type as Network File System (NFS). In the source location option, chose NFS type and add the Amazon EFS domain name system (DNS) name or use one of the EFS IP addresses of the mount target with the mount path of the location.
+
+Source location configuration in detail, with location type as NFS and Server as the EFS DNS name.
+
+In this destination location option, I choose Amazon EFS file system for location type. Selected the file system ID with the mount path information, then clicked to expand Additional Information to choose the subnet and security group. 
+Destination location configuration in detail
+
+After the locations are created, I have created a DataSync task by selecting existing locations that I created in the previous steps and configure task settings for the file transfer.
+
+When the DataSync Task has been created, it performs a quick validation on the source file system only and changes the status to Available.
+

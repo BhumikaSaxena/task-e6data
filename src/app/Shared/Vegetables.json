@@ -1,5 +1,0 @@
-{ "Vegetables" : [
-   { "name" :"Cabbage" , "price" : "10" , "image_path" : "https://www.organicfacts.net/wp-content/uploads/2013/05/Cabbage11.jpg"},
-   {"name":"Lady Finger" , "price" : "25" , "image_path" : "http://goagroceries.com/wp-content/uploads/2015/07/Lady-finger.jpg"}      
-]
-}

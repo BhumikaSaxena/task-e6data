@@ -1,5 +1,0 @@
-{ "fruits" : [
-   { "name" :"Orange" , "price" : "20" , "image_path" : "https://5.imimg.com/data5/XN/GR/MY-3040698/mini-orange-fruit-500x500.png"},
-   {"name":"Grapes" , "price" : "40" , "image_path" : "https://5.imimg.com/data5/XN/GR/MY-3040698/mini-orange-fruit-500x500.png"}      
-]
-}
